@@ -30,6 +30,17 @@ module.exports = function (grunt) {
             dest: 'dist'
         }
     },
+    // Usemin
+    // Replaces all assets with their revved version in html and css files.
+    // options.assetDirs contains the directories for finding the assets
+    // according to their relative paths
+    usemin: {
+        html: ['dist/*.html'],
+        css: ['dist/styles/*.css'],
+        options: {
+            assetsDirs: ['dist', 'dist/styles']
+        }
+    },
     // Concat
     concat: {
         options: {
@@ -37,6 +48,18 @@ module.exports = function (grunt) {
         },
         // dist configuration is provided by useminPrepare
         dist: {}
+    },
+    ngAnnotate: {
+        options: {
+            remove: true,
+            add: true,
+            singleQuotes: true
+        },
+        app: {
+            files: {
+                'app/scripts/app.js': 'app/scripts/app.js'
+            }
+        }
     },
       // Uglify
     uglify: {
@@ -62,17 +85,6 @@ module.exports = function (grunt) {
                     'dist/styles/*.css',
                 ]
             }]
-        }
-    },
-    // Usemin
-    // Replaces all assets with their revved version in html and css files.
-    // options.assetDirs contains the directories for finding the assets
-    // according to their relative paths
-    usemin: {
-        html: ['dist/*.html'],
-        css: ['dist/styles/*.css'],
-        options: {
-            assetsDirs: ['dist', 'dist/styles']
         }
     },
     copy: {
@@ -159,6 +171,7 @@ module.exports = function (grunt) {
     'useminPrepare',
     'concat',
     'cssmin',
+    'ngAnnotate',
     'uglify',
     'copy',
     'filerev',
