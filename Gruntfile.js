@@ -25,7 +25,7 @@ module.exports = function (grunt) {
       }
     },
      useminPrepare: {
-        html: 'app/menu.html',
+        html: 'app/index.html',
         options: {
             dest: 'dist'
         }
@@ -48,18 +48,6 @@ module.exports = function (grunt) {
         },
         // dist configuration is provided by useminPrepare
         dist: {}
-    },
-    ngAnnotate: {
-        options: {
-            remove: true,
-            add: true,
-            singleQuotes: true
-        },
-        app: {
-            files: {
-                'app/scripts/app.js': 'app/scripts/app.js'
-            }
-        }
     },
       // Uglify
     uglify: {
@@ -152,7 +140,7 @@ module.exports = function (grunt) {
           base:{
                path: 'dist',
             options: {
-                index: 'menu.html',
+                index: 'index.html',
                 maxAge: 300000
             }
           }
@@ -171,7 +159,6 @@ module.exports = function (grunt) {
     'useminPrepare',
     'concat',
     'cssmin',
-    'ngAnnotate',
     'uglify',
     'copy',
     'filerev',
