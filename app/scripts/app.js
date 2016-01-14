@@ -22,9 +22,9 @@ angular.module('confusionApp', ['ui.router'])
           url:'aboutus',
           views: {
               'content@': {
-                  template: '<h1>To be Completed</h1>',
+                  templateUrl : 'views/aboutus.html',
                   controller  : 'AboutController'
-             }
+              }
           }
       })
               // route for the contactus page
