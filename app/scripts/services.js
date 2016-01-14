@@ -174,6 +174,10 @@ angular.module('confusionApp')
                 menufac.getDish = function (index) {
                   return dishes[index];
                 };
+
+                menufac.getPromotion = function(){
+                  return dishes[2];
+                };
                 return menufac;
         })
 

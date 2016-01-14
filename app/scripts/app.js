@@ -8,9 +8,9 @@ angular.module('confusionApp', ['ui.router'])
           'header': {
             templateUrl: 'views/header.html',
           },
-          'content':{
-            template: '<h1> To be completed</h1>',
-            controller: 'IndexController'
+          'content': {
+            templateUrl : 'views/home.html',
+            controller  : 'IndexController'
           },
           'footer':{
             templateUrl: 'views/footer.html',
