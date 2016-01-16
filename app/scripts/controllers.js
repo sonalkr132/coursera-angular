@@ -6,15 +6,13 @@ angular.module('confusionApp')
             $scope.showMenu = false;
             $scope.message = "Loading ...";
 
-            $scope.dishes = {};
-            menuFactory.getDishes()
-            .then(
+            menuFactory.getDishes().query(
               function(response){
-                $scope.dishes = response.data;
+                $scope.dishes = response;
                 $scope.showMenu = true;
               },
               function(response){
-                $scope.message = "Error: "+ response.status + " " + response.statusText;
+                $scope.message = "Error: " + response.status + " " + response.statusText;
               }
             );
 
@@ -70,22 +68,23 @@ angular.module('confusionApp')
         }])
 
         .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function($scope, $stateParams, menuFactory) {
-            $scope.dish = {};
+
             $scope.showDish = false;
             $scope.message="Loading ...";
-            menuFactory.getDish(parseInt($stateParams.id,10))
-            .then(
-              function(response){
-                $scope.dish = response.data;
-                $scope.showDish = true;
-              },
-              function(response){
-                $scope.message = "Error: "+ response.status + " " + response.statusText;
-              }
-            );
+
+            $scope.dish = menuFactory.getDishes().get({id: parseInt($stateParams.id, 10)})
+              .$promise.then(
+                function(response){
+                    $scope.dish = response;
+                    $scope.showDish = true;
+                },
+                function(response) {
+                    $scope.message = "Error: "+response.status + " " + response.statusText;
+                }
+              );
         }])
 
-        .controller('DishCommentController', ['$scope', function($scope) {
+        .controller('DishCommentController', ['$scope', 'menuFactory', function($scope, menuFactory) {
 
             //Step 1: Create a JavaScript object to hold the comment from the form
             $scope.new_comment = { author:"", rating: 5, comment:"" };
@@ -96,6 +95,7 @@ angular.module('confusionApp')
 
                 // Step 3: Push your comment into the dish's comment array
                 $scope.dish.comments.push($scope.new_comment);
+                menuFactory.getDishes().update({id: $scope.dish.id}, $scope.dish);
 
                 //Step 4: reset your form to pristine
                 $scope.commentForm.$setPristine();
@@ -110,30 +110,29 @@ angular.module('confusionApp')
 
         .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function($scope, menuFactory, corporateFactory){
           $scope.chef = corporateFactory.getLeader(2);
-          $scope.promotion = {};
           $scope.showDish = false;
           $scope.message="Loading ...";
-          menuFactory.getPromotion()
-          .then(
+
+          $scope.promotion = menuFactory.getDishes().get({id: parseInt(1, 10)})
+            .$promise.then(
               function(response){
-                $scope.promotion = response.data;
-                $scope.showDish = true;
+                  $scope.promotion = response;
+                  $scope.showDish = true;
               },
               function(response) {
-                  $scope.message = "Error: "+ response.status + " " + response.statusText;
+                  $scope.message = "Error: "+response.status + " " + response.statusText;
               }
-          );
-          $scope.featured = {};
-          menuFactory.getDish(0)
-          .then(
+            );
+          $scope.featured = menuFactory.getDishes().get({id: parseInt(2, 10)})
+            .$promise.then(
               function(response){
-                $scope.featured = response.data;
-                $scope.showDish = true;
+                  $scope.featured = response;
+                  $scope.showDish = true;
               },
               function(response) {
-                  $scope.message = "Error: "+ response.status + " " + response.statusText;
+                  $scope.message = "Error: "+response.status + " " + response.statusText;
               }
-          );
+            );
         }])
 
 ;
